@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsString } from "class-validator";
+import { Provider } from "@prisma/client";
 
 export class CreateUserDto {
 	@IsEmail()
@@ -14,15 +15,9 @@ export class CreateUserDto {
 	@ApiProperty({ type: String, description: "유저 Password" })
 	password: string;
 
-	@IsString()
-	@ApiProperty({ type: String, description: "소속(회사/학교)" })
-	affiliation: string;
+	@IsEnum(Provider)
+	provider: Provider;
 
 	@IsString()
-	@ApiProperty({ type: String, description: "직책" })
-	position: string;
-
-	@IsString()
-	@ApiProperty({ type: String, description: "연락처" })
-	contact: string;
+	refreshToken: string;
 }
