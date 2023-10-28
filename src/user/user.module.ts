@@ -1,14 +1,14 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { UserController } from "./user.controller";
-import { UserService } from "./user.service";
-import { APP_GUARD } from "@nestjs/core";
+import { UserController } from "@user/user.controller";
+import { UserService } from "@user/user.service";
+import { UserRepository } from "@user/user.repository";
 
 @Module({
 	imports: [
 		ConfigModule
 	],
-	providers: [UserService],
+	providers: [UserService, UserRepository],
 	controllers: [UserController],
 	exports: [UserService],
 })

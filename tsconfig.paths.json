@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@common/*": ["src/common/*"],
+        "@/*": ["src/*"],
+        "@user/*": ["src/user/*"],
+        "@auth/*": ["src/auth/*"],
+        "@prisma/*": ["src/prisma/*"]
+      }
+    }
+  }
+  
