@@ -4,12 +4,12 @@ import { Profile, Strategy } from "passport-naver";
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class NaverStrategy extends PassportStrategy(Strategy) {
+export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
   constructor(private readonly configService: ConfigService) {
     super({
         clientID: configService.get('NAVER_CLIENT_ID'),
-        clientSecret: '',
-        callbackURL: configService.get('BASE_URL') + 'naver/callback',
+        clientSecret: configService.get('NAVER_CLIENT_SECRET'),
+        callbackURL: configService.get('BASE_URL') + 'auth/naver/callback',
     });
   }
 
@@ -20,11 +20,12 @@ export class NaverStrategy extends PassportStrategy(Strategy) {
     done: (error: any, user?: any, info?: any) => void,
   ) {
     try {
-      const { _json } = profile;
+      const { provider, _json } = profile;
       const user = {
         email: _json.email,
         nickname: _json.nickname,
         photo: _json.profile_image,
+        provider: provider,
       };
       done(null, user);
     } catch (error) {
