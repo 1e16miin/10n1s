@@ -1,33 +1,36 @@
-import {
-	ForbiddenException,
-	Injectable,
-	NotFoundException,
-} from "@nestjs/common";
-import { GoogleRequest } from '@auth/auth.interface';
-import { GoogleLoginAuthOutputDto } from '@auth/dtos/google-login-auth.dto';
-import { JwtService } from '@nestjs/jwt';
-import { Request, Response } from 'express';
-import { ConfigService } from "@nestjs/config";
+import { ConflictException, Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { UserService } from "@user/user.service";
+// import {
+//   IAuthServiceGetAccessToken,
+//   IAuthServiceSetRefreshToken,
+// } from "./interfaces/auth-service.interface";
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
-  ) {}
-  async findOrCreateGoogleUser(profile: any){
+  constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-  }
-
-  async findOrCreateAppleUser(profile: any){
+  // setAccessToken({user, res}){
     
-  }
+  // }
 
-  async login(user: any) {
+  // setRefreshToken({user, res}){
 
-    // return {accessToken: }
+  // }
+
+  async socialLogin(socialUser: any) {
+    let user = await this.userService.findByEmail(socialUser.email);
+
+    if (user){
+      if (user.provider !== socialUser.provider) {
+        throw new ConflictException('이미 존재하는 이메일 입니다.')
+      }
+    } else {
+      user = await this.userService.create({ ...socialUser })
+    }
+
+    const payload = {sub: user.id, email: user.email}
+
+    return {accessToken: this.jwtService.sign(payload)};
   }
-  
 }

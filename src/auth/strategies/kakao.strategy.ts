@@ -4,12 +4,12 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Profile, Strategy } from 'passport-kakao';
 
 @Injectable()
-export class KakaoStrategy extends PassportStrategy(Strategy) {
+export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   constructor(private readonly configService: ConfigService) {
     super({
       clientID: configService.get('KAKAO_CLIENT_ID'),
-      clientSecret: '',
-      callbackURL: configService.get('BASE_URL') + 'kakao/callback',
+      clientSecret: configService.get('KAKAO_CLIENT_SECRET'),
+      callbackURL: configService.get('BASE_URL') + 'auth/kakao/callback',
     });
   }
 
@@ -20,11 +20,12 @@ export class KakaoStrategy extends PassportStrategy(Strategy) {
     done: (error: any, user?: any, info?: any) => void,
   ) {
     try {
-      const { _json } = profile;
+      const {provider, _json } = profile;
       const user = {
         email: _json.kakao_account.email,
         nickname: _json.properties.nickname,
         photo: _json.properties.thumbnail_image,
+        provider: provider
       };
       done(null, user);
     } catch (error) {
