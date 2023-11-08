@@ -22,12 +22,13 @@ export class AuthController {	//클래스이름
   @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) {}
 
-  @Get("/google/callback")
+  @Get("/google")
   @UseGuards(AuthGuard("google"))
 	async googleLoginCallBack(
-    @Req() req: Request,
-    @Res() res: Response
+    @Req() req: Request, //{": "dfadsafd""}
+    @Res() res: Response //{"accessToken: """}
   ) {
+    console.log(res)
     res.send(await this.authService.socialLogin(req.user));
   }
  
