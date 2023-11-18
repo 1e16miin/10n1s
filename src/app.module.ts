@@ -16,7 +16,8 @@ import { UserModule } from "@user/user.module";
 		AuthModule,
 		ConfigModule.forRoot({
 			isGlobal:true,
-			envFilePath: process.env.NODE_ENV === "production" ? ".env" : ".env.dev",
+			cache: true,
+			envFilePath: process.env.NODE_ENV === "production" ? ".env" : ".env.local",
 			validationSchema: Joi.object({
 				BASE_URL: Joi.string().required(),
 				PORT: Joi.number().required(),
@@ -31,6 +32,7 @@ import { UserModule } from "@user/user.module";
 				REFRESH_TOKEN_EXPIRE_TIME: Joi.number().required(),
 				ACCESS_TOKEN_EXPIRE_TIME: Joi.number().required(),
 				BCRYPT_SALT: Joi.number().required(),
+				GOOGLE_CLIENT_ID: Joi.string().required()
 			}),
 		}),
 		PrismaModule
