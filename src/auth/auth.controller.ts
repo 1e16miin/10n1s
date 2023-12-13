@@ -3,6 +3,7 @@ import { AuthService } from "./auth.service";
 import { Provider } from '@prisma/client';
 import { ApiTags, ApiConflictResponse, ApiCreatedResponse, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import { OAuth2Client } from 'google-auth-library';
+import { Public } from "../common/decorators/skip-auth.decorator";
 import { GoogleLoginInputDto } from "./dtos/google-login-auth.dto";
 import { AuthToken } from "./dtos/auth-token.dto";
 
@@ -21,6 +22,7 @@ export class AuthController {	//클래스이름
   ) {}
 
   @ApiCreatedResponse({description: "구글 인증 성공. 최초 로그인시 회원가입이 되며 AccessToken 발행. 이후 로그인 시에는 AccessToken만 발행", type: AuthToken})
+  @Public()
   @Post('google/token')
   async handleGoogleToken(@Body() {googleAccessToken}:GoogleLoginInputDto) {
       const clientId = process.env.GOOGLE_CLIENT_ID
