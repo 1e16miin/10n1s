@@ -1,19 +1,10 @@
-import { Body, Controller, Get, Patch, Post, Response } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import {
 	ApiBadRequestResponse,
-	ApiCreatedResponse,
-	ApiForbiddenResponse,
 	ApiInternalServerErrorResponse,
-	ApiOkResponse,
-	ApiOperation,
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-
-import { Public } from "../common/decorators/skip-auth.decorator";
-// import { User } from "../common/decorators/user.decorator";
-import { CreateUserDto } from "@user/dtos/create-user.dto";
-import { UpdateUserDto } from "@user/dtos/update-user.dto";
 import { UserService } from "./user.service";
 
 @ApiUnauthorizedResponse({
