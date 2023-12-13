@@ -1,10 +1,7 @@
 import {
-	ForbiddenException,
 	Injectable,
-	NotFoundException,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { CreateUserDto } from "@user/dtos/create-user.dto";
 import {UserRepository} from "@user/user.repository"
 import { Prisma } from "@prisma/client";
 
@@ -21,7 +18,6 @@ export class UserService {
 	async update(id: number, updateUserInput: Prisma.UserUpdateInput){
 		return await this.userRepository.update(id, updateUserInput);
 	}
-
 	async findByEmail(email: any){
 		return await this.userRepository.findByEmail(email)
 	}

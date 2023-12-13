@@ -2,7 +2,6 @@ import { Controller, Post, Body, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Provider } from '@prisma/client';
 import { ApiTags, ApiConflictResponse, ApiCreatedResponse, ApiUnauthorizedResponse } from "@nestjs/swagger";
-
 import { OAuth2Client } from 'google-auth-library';
 import { GoogleLoginInputDto } from "./dtos/google-login-auth.dto";
 import { AuthToken } from "./dtos/auth-token.dto";
@@ -41,25 +40,5 @@ export class AuthController {	//클래스이름
           throw new UnauthorizedException('토큰이 유효하지 않습니다.');
       }
   }
- 
-  // @Get('naver')
-  // @UseGuards(AuthGuard('naver'))
-  // naverLogin() {}
-
-  // @Get('naver/callback')
-  // @UseGuards(AuthGuard('naver'))
-  // async naverLoginCallback(@Req() req: Request, @Res() res: Response	) {
-  //   res.send(await this.authService.socialLogin(req.user));
-  // }
-
-  // @Get('kakao')
-  // @UseGuards(AuthGuard('kakao'))
-  // kakaoLogin() {}
-
-  // @Get('naver/callback')
-  // @UseGuards(AuthGuard('kakao'))
-  // async kakaoLoginCallback( @Req() req: Request, @Res() res: Response	) {
-  //   res.send(await this.authService.socialLogin(req.user));
-  // }
 }
 
